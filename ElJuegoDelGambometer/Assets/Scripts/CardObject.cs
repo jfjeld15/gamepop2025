@@ -8,7 +8,7 @@ public class CardObject : MonoBehaviour
   public float positive;
   public float negative;
   public string text;
-    public Sprite cardSprite;
+  public Sprite cardSprite;
 
   void Awake()
   {
@@ -26,6 +26,7 @@ public class CardObject : MonoBehaviour
         positive =  values.Item1;
         negative = values.Item2;
         text = $" If you roll an even number, deal {values.Item1} damage. If you roll an odd number, deal {negative} damage to yourself";
+        cardSprite = Resources.Load<Sprite>("Sprites/attack_card");
     }
     if (CardType == 2)
     {
@@ -33,6 +34,7 @@ public class CardObject : MonoBehaviour
         positive = (float) Mathf.Round(values.Item1*10)* 0.1f;
         negative =(float) Mathf.Round(values.Item2*10)*0.1f;
         text = $" If you roll an even number, deal {positive} times damage. If you roll an odd number, reduce your damage by a factor of {negative}";
+        cardSprite = Resources.Load<Sprite>("Sprites/attack_card");
     }
     if (CardType == 3)
     {
@@ -40,6 +42,7 @@ public class CardObject : MonoBehaviour
        positive = values.Item1;
        negative = values.Item2;
         text = $" If you roll an even number, gain {positive} shield. If you roll an odd number, deal {negative} damage to yourself";
+        cardSprite = Resources.Load<Sprite>("Sprites/shield_card");
     }
     if (CardType == 4)
     {
@@ -47,18 +50,20 @@ public class CardObject : MonoBehaviour
         positive = (float) Mathf.Round(values.Item1*100)*0.01f;
         negative =(float) Mathf.Round(values.Item2*100)*0.01f;
         text = $" If you roll an even number, heal {positive}% of your health. If you roll an odd number, deal {negative}% of your health as self-damage";
+        cardSprite = Resources.Load<Sprite>("Sprites/heal_card");
     }
     if (CardType == 5)
     {
-        
         positive = 2.0f;
         negative =0.0f;
         text = $" Double your attack this turn";
+        cardSprite = Resources.Load<Sprite>("Sprites/2x_attack_card");
     }
     if (CardType == 6){
       positive = 0.0f;
       negative = 0.0f;
       text = $"Ignore shields";
+      cardSprite = Resources.Load<Sprite>("Sprites/ignore_shield_card");
     }
   }
   

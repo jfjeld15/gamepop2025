@@ -112,7 +112,8 @@ public class CardVisual : MonoBehaviour
         {
             effectText.text = co.text;
             // If you also store a sprite in CardObject, you can do:
-            // cardImage.sprite = co.mySprite;
+            Debug.Log(co.cardSprite);
+            cardImage.sprite = co.cardSprite;
         }
     }
 
