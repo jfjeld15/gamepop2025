@@ -48,6 +48,7 @@ public class DialogueManager : MonoBehaviour {
         textContinueButton = GameObject.Find("ContinueButton")?.GetComponent<Button>();
         nameText = GameObject.Find("NameText")?.GetComponent<TextMeshProUGUI>();
         dialogueText = GameObject.Find("DialogueText")?.GetComponent<TextMeshProUGUI>();
+        Debug.Log("GAME OBJECTS FOUND");
 
         if (textContinueButton != null)
         {

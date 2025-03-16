@@ -165,7 +165,9 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         SelectEvent.Invoke(this, selected);
 
         if (selected)
+        {
             transform.localPosition = new Vector3(0, selectionOffset, 0);
+        }
         else
             transform.localPosition = Vector3.zero;
     }
@@ -176,7 +178,9 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         {
             selected = false;
             if (selected)
+            {
                 transform.localPosition = new Vector3(0, selectionOffset, 0);
+            }
             else
                 transform.localPosition = Vector3.zero;
         }

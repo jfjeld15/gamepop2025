@@ -8,11 +8,12 @@ public class CardObject : MonoBehaviour
   public float positive;
   public float negative;
   public string text;
+    public Sprite cardSprite;
 
-  void Start()
+  void Awake()
   {
     
-    genCardValues = FindObjectOfType<GenerateCardValues>();
+    genCardValues = this.GetComponentInChildren<GenerateCardValues>();
     
   }
   

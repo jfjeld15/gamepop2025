@@ -26,7 +26,19 @@ public class HorizontalCardHolder : MonoBehaviour
     {
         for (int i = 0; i < cardsToSpawn; i++)
         {
-            Instantiate(slotPrefab, transform);
+            GameObject slotObj = Instantiate(slotPrefab, transform);
+            Debug.Log(slotObj.name);
+            Card card = slotObj.GetComponentInChildren<Card>();
+            Debug.Log(card);
+            CardObject cardObj = slotObj.GetComponentInChildren<CardObject>();
+            Debug.Log(cardObj);
+
+            if (cardObj != null)
+            {
+                int cardType = UnityEngine.Random.Range(1, 7);
+                Debug.Log("Selected card type: " + cardType.ToString());
+                cardObj.Initialize(cardType);
+            }
         }
 
         rect = GetComponent<RectTransform>();
@@ -160,6 +172,28 @@ public class HorizontalCardHolder : MonoBehaviour
         {
             card.cardVisual.UpdateIndex(transform.childCount);
         }
+    }
+
+    public void SubmitSelectedCards()
+    {
+        float totalDamage = 0f;
+
+        // Loop through all cards in your HorizontalCardHolder
+        foreach (Card card in cards)
+        {
+            if (card.selected)
+            {
+                CardObject co = card.GetComponentInChildren<CardObject>();
+                if (co != null)
+                {
+                    // For example, you might sum the "positive" damage values
+                    totalDamage += co.positive;
+                }
+            }
+        }
+
+        // Now do something with the total damage, like apply it to an enemy
+        Debug.Log("Total Damage Dealt: " + totalDamage);
     }
 
 }
