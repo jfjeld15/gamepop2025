@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,13 +11,13 @@ public class DialogueManager : MonoBehaviour {
     public static DialogueManager Instance { get; private set; }
 
     private Button textContinueButton;
-    private Text nameText;
-    private Text dialogueText;
+    private TextMeshProUGUI nameText;
+    private TextMeshProUGUI dialogueText;
 
     private Queue<string> sentences;
 
     // Singleton stuff, from chatGPT to help me understand <3
-    private void Awake()
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -45,8 +46,8 @@ public class DialogueManager : MonoBehaviour {
         // Find the dialogue box objects dynamically (for use in different scenes)
         // NOTE: THESE NAMES MUST BE UNIQUE IN THE SCENE!
         textContinueButton = GameObject.Find("ContinueButton")?.GetComponent<Button>();
-        nameText = GameObject.Find("NameText")?.GetComponent<Text>();
-        dialogueText = GameObject.Find("DialogueText")?.GetComponent<Text>();
+        nameText = GameObject.Find("NameText")?.GetComponent<TextMeshProUGUI>();
+        dialogueText = GameObject.Find("DialogueText")?.GetComponent<TextMeshProUGUI>();
 
         if (textContinueButton != null)
         {
@@ -83,7 +84,18 @@ public class DialogueManager : MonoBehaviour {
         }
 
         string sentence = sentences.Dequeue();
-        dialogueText.text = sentence;
+        StopAllCoroutines();  // Stop existing coroutine if one is currently happening
+        StartCoroutine(TypeSentence(sentence));
+    }
+
+    IEnumerator TypeSentence(string sentence)
+    {
+        dialogueText.text = "";
+        foreach (char letter in sentence.ToCharArray())
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 
     private void EndDialogue()
