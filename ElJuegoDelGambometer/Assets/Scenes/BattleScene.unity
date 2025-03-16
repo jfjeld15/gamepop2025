@@ -253,9 +253,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4166728334570258239, guid: ae9a1df25e5d38a46ac51a2ad4858194,
+        type: 3}
+      propertyPath: m_Value
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4166728335703062144, guid: ae9a1df25e5d38a46ac51a2ad4858194,
         type: 3}
       propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4166728335703062144, guid: ae9a1df25e5d38a46ac51a2ad4858194,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1373,7 +1383,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 40
   m_WholeNumbers: 1
-  m_Value: 17
+  m_Value: 40
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
