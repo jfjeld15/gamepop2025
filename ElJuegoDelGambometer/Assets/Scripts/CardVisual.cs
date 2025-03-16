@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using Unity.Collections;
 using UnityEngine.UI;
+using TMPro;
 // using Unity.VisualScripting;
 
 // Largely borrowed from Mix and Jam's "Balatro Feel" video
@@ -62,9 +63,23 @@ public class CardVisual : MonoBehaviour
     [Header("Curve")]
     [SerializeField] private CurveParameters curve;
 
+    [SerializeField] private TextMeshPro effectText;  // UI Text on the card
+
     private float curveYOffset;
     private float curveRotationOffset;
     private Coroutine pressCoroutine;
+
+    private void Awake()
+    {
+        if (effectText == null)
+        {
+            effectText = GetComponentInChildren<TextMeshPro>();
+            if (effectText == null)
+            {
+                Debug.LogError("No Text component found in children of CardVisual!");
+            }
+        }
+    }
 
     private void Start()
     {
@@ -90,6 +105,15 @@ public class CardVisual : MonoBehaviour
 
         //Initialization
         initalize = true;
+
+        CardObject co = target.GetComponentInChildren<CardObject>();
+        Debug.Log(co.text);
+        if (co != null)
+        {
+            effectText.text = co.text;
+            // If you also store a sprite in CardObject, you can do:
+            // cardImage.sprite = co.mySprite;
+        }
     }
 
     public void UpdateIndex(int length)
