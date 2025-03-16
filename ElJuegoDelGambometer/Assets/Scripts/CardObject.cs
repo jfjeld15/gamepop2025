@@ -9,6 +9,7 @@ public class CardObject : MonoBehaviour
   public float negative;
   public string text;
   public Sprite cardSprite;
+  public int cardType;
 
   void Awake()
   {
@@ -20,6 +21,7 @@ public class CardObject : MonoBehaviour
   public void Initialize(int CardType)
   {
     // 1 : Flat Attack, 2: Mult Attack, 3: Shield, 4: Heal, 5: Double Attack, 6: Ignore Shield
+    cardType = CardType;
     if (CardType == 1)
     {
         (float,float) values = genCardValues.GenFlatRed();

@@ -22,6 +22,10 @@ public class HorizontalCardHolder : MonoBehaviour
     bool isCrossing = false;
     [SerializeField] private bool tweenCardReturn = true;
 
+    public int maxSelectedCards = 3;
+
+    public List<Card> selectedCards;
+
     void Start()
     {
         for (int i = 0; i < cardsToSpawn; i++)
@@ -52,6 +56,7 @@ public class HorizontalCardHolder : MonoBehaviour
             card.PointerExitEvent.AddListener(CardPointerExit);
             card.BeginDragEvent.AddListener(BeginDrag);
             card.EndDragEvent.AddListener(EndDrag);
+            card.PointerUpEvent.AddListener(CardPointerUp);
             card.name = cardCount.ToString();
             cardCount++;
         }
@@ -97,6 +102,22 @@ public class HorizontalCardHolder : MonoBehaviour
     void CardPointerExit(Card card)
     {
         hoveredCard = null;
+    }
+
+    void CardPointerUp(Card card, bool selected)
+    {
+        if (!selectedCards.Contains(card)){
+            if (selectedCards.Count < maxSelectedCards)
+            {
+                selectedCards.Add(card);
+                card.selected = true;
+            }
+        }
+        else
+        {
+            selectedCards.Remove(card);
+            card.selected = false;
+        }
     }
 
     void Update()
@@ -194,6 +215,14 @@ public class HorizontalCardHolder : MonoBehaviour
 
         // Now do something with the total damage, like apply it to an enemy
         Debug.Log("Total Damage Dealt: " + totalDamage);
+    }
+
+    public void ClearSelectedCards()
+    {
+        foreach (Card card in cards)
+        {
+            Destroy(card);
+        }
     }
 
 }

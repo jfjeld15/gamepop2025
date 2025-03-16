@@ -23,6 +23,8 @@ public class DiceRoller : MonoBehaviour
     private float rollTime;
     private float changeNumberTimer;
     private float changeNumberInterval;
+
+    public GameManager gameManager;
     
     private void Update()
     {
@@ -42,9 +44,8 @@ public class DiceRoller : MonoBehaviour
                 this.gameObject.transform.eulerAngles = new Vector3(0, 0, Mathf.Round(this.gameObject.transform.eulerAngles.z / 90) * 90);
             }
 
-            // TODO: 
-            // Send signal to return number and continue turn
-            // Set state to ready again
+            gameManager.PlayCards(rolledNumber);
+            state = DiceState.Ready;
         }
     }
 

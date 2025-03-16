@@ -110,6 +110,7 @@ public class CardVisual : MonoBehaviour
         Debug.Log(co.text);
         if (co != null)
         {
+            if (effectText != null)
             effectText.text = co.text;
             // If you also store a sprite in CardObject, you can do:
             Debug.Log(co.cardSprite);

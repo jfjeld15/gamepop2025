@@ -161,7 +161,6 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         if (wasDragged)
             return;
 
-        selected = !selected;
         SelectEvent.Invoke(this, selected);
 
         if (selected)
