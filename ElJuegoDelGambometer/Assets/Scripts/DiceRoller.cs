@@ -2,40 +2,63 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditorInternal;
+using System.Data.Common;
+
+public enum DiceState
+{
+    Ready,
+    Rolling,
+    Finishing,
+    Finished,
+}
 
 public class DiceRoller : MonoBehaviour
 {
     public TextMeshPro number;
     public float spinSpeed = 1000f;
-    private bool isRolling = false;
+    public DiceState state = DiceState.Ready;
     private float slowDownRate;
     private int rolledNumber;
     private float rollTime;
     private float changeNumberTimer;
     private float changeNumberInterval;
-    private bool finishing;  // This is for aligning the die
-
+    
     private void Update()
     {
-        if (isRolling)
+        if (state == DiceState.Rolling)
         {
             RotateDie();
         }
-        if (finishing)
+        else if (state == DiceState.Finishing)
         {
             StopRolling();
+        }
+        else  if (state == DiceState.Finished)
+        {
+            // Align the die to the nearest 90 degrees
+            if (System.Math.Abs(this.gameObject.transform.eulerAngles.z / 5) < 1)
+            {
+                this.gameObject.transform.eulerAngles = new Vector3(0, 0, Mathf.Round(this.gameObject.transform.eulerAngles.z / 90) * 90);
+            }
+
+            // TODO: 
+            // Send signal to return number and continue turn
+            // Set state to ready again
         }
     }
 
     public void StartRoll()
     {
-        isRolling = true;
-        spinSpeed = 1000f;
-        rollTime = Random.Range(1.5f, 3.5f);
-        changeNumberTimer = 0f;
-        changeNumberInterval = 0.05f;
-        slowDownRate = spinSpeed / rollTime;
-        Invoke("StopRolling", rollTime);  // Stop rolling in random number of seconds between 1.5 and 3 secs
+        if (state == DiceState.Ready)
+        {
+            state = DiceState.Rolling;
+            spinSpeed = 1000f;
+            rollTime = Random.Range(1.5f, 3.5f);
+            changeNumberTimer = 0f;
+            changeNumberInterval = 0.05f;
+            slowDownRate = spinSpeed / rollTime;
+        }
     }
 
     private void RotateDie()
@@ -63,23 +86,24 @@ public class DiceRoller : MonoBehaviour
         if (spinSpeed < 0f)
         {
             spinSpeed = 0f;
+            StopRolling();
         }
     }
 
     private void StopRolling()
     {
-        isRolling = false;
+        //isRolling = false;
+        state = DiceState.Finishing;
         if (System.Math.Abs(this.gameObject.transform.eulerAngles.z / 5) < 1)
         {
-            finishing = false;
+            state = DiceState.Finished;
             spinSpeed = 0;
             Debug.Log(System.Math.Abs(this.gameObject.transform.eulerAngles.z / 5));
             Debug.Log("You rolled: " + rolledNumber);
         }
         else
         {
-            finishing = true;
-            transform.Rotate(0, 0, 1000 * Time.deltaTime);
+            transform.Rotate(0, 0, 300 * Time.deltaTime);
         }
     }
 }
