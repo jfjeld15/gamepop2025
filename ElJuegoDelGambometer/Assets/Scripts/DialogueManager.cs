@@ -17,7 +17,7 @@ public class DialogueManager : MonoBehaviour {
     private Queue<string> sentences;
 
     // Singleton stuff, from chatGPT to help me understand <3
-    private void Awake()
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {
