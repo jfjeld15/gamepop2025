@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardValues : MonoBehaviour
+public class GenerateCardValues : MonoBehaviour
 {
     public (int,int) GenFlatRed(){
         //Generate flat attack values and corresponding negative
@@ -35,7 +35,7 @@ public class CardValues : MonoBehaviour
         
         float heal_val = Random.Range(0.05f,0.15f);
         float coeff  = Random.Range(0.25f,0.75f);
-        int debuff_val = (int) Mathf.Ceil((coeff*heal_val));
+        float debuff_val = coeff*heal_val;
         return (heal_val,-1*debuff_val);  
     }
 
