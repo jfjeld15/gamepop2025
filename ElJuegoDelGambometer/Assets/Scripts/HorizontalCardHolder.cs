@@ -219,10 +219,53 @@ public class HorizontalCardHolder : MonoBehaviour
 
     public void ClearSelectedCards()
     {
+        foreach (Card card in selectedCards)
+        {
+            cards.Remove(card);
+            Destroy(card.transform.parent.gameObject);
+        
+            GameObject slotObj = Instantiate(slotPrefab, transform);
+            Card newCard = slotObj.GetComponentInChildren<Card>();
+            CardObject cardObj = slotObj.GetComponentInChildren<CardObject>();
+
+            if (cardObj != null)
+            {
+                int cardType = UnityEngine.Random.Range(1, 7);
+                Debug.Log("Selected card type: " + cardType.ToString());
+                cardObj.Initialize(cardType);
+            }
+        }
+
+        selectedCards.Clear();
+
+        rect = GetComponent<RectTransform>();
+        cards = GetComponentsInChildren<Card>().ToList();
+
+        int cardCount = 0;
+
         foreach (Card card in cards)
         {
-            Destroy(card);
+            card.PointerEnterEvent.AddListener(CardPointerEnter);
+            card.PointerExitEvent.AddListener(CardPointerExit);
+            card.BeginDragEvent.AddListener(BeginDrag);
+            card.EndDragEvent.AddListener(EndDrag);
+            card.PointerUpEvent.AddListener(CardPointerUp);
+            card.name = cardCount.ToString();
+            cardCount++;
         }
+
+        StartCoroutine(Frame());
+
+        IEnumerator Frame()
+        {
+            yield return new WaitForSecondsRealtime(.1f);
+            for (int i = 0; i < cards.Count; i++)
+            {
+                if (cards[i].cardVisual != null)
+                    cards[i].cardVisual.UpdateIndex(transform.childCount);
+            }
+        }
+
     }
 
 }

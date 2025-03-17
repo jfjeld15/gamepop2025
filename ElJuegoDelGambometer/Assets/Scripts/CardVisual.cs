@@ -63,7 +63,7 @@ public class CardVisual : MonoBehaviour
     [Header("Curve")]
     [SerializeField] private CurveParameters curve;
 
-    [SerializeField] private TextMeshPro effectText;  // UI Text on the card
+    [SerializeField] private TextMeshProUGUI effectText;  // UI Text on the card
 
     private float curveYOffset;
     private float curveRotationOffset;
@@ -73,7 +73,7 @@ public class CardVisual : MonoBehaviour
     {
         if (effectText == null)
         {
-            effectText = GetComponentInChildren<TextMeshPro>();
+            effectText = GetComponentInChildren<TextMeshProUGUI>();
             if (effectText == null)
             {
                 Debug.LogError("No Text component found in children of CardVisual!");
@@ -240,6 +240,11 @@ public class CardVisual : MonoBehaviour
             
         visualShadow.localPosition += (-Vector3.up * shadowOffset);
         shadowCanvas.overrideSorting = false;
+    }
+
+    void OnDestroy()
+    {
+        Destroy(effectText);
     }
 
 }
