@@ -221,7 +221,6 @@ public class HorizontalCardHolder : MonoBehaviour
     {
         foreach (Card card in selectedCards)
         {
-            cards.Remove(card);
             Destroy(card.transform.parent.gameObject);
         
             GameObject slotObj = Instantiate(slotPrefab, transform);
@@ -237,12 +236,12 @@ public class HorizontalCardHolder : MonoBehaviour
         }
 
         selectedCards.Clear();
+        cards.Clear();
 
         rect = GetComponent<RectTransform>();
         cards = GetComponentsInChildren<Card>().ToList();
 
         int cardCount = 0;
-
         foreach (Card card in cards)
         {
             card.PointerEnterEvent.AddListener(CardPointerEnter);

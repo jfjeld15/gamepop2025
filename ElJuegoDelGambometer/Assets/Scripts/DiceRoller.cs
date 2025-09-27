@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEditorInternal;
 using System.Data.Common;
 
 public enum DiceState
